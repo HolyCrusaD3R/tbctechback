@@ -19,16 +19,11 @@ class ContractQuery
 
     /**
      * @param int $id
-     * @param int $userId
      * @return Contract|null
      */
-    public function getByIdAndUserId(int $id, int $userId): ?Contract
+    public function getById(int $id): ?Contract
     {
         return Contract::query()
-            ->whereHas('product', function ($query) use ($userId) {
-                $query->where('user_id', $userId);
-            })
-            ->orWhere('buyer_id', $userId)
             ->where('id', $id)
             ->first();
     }

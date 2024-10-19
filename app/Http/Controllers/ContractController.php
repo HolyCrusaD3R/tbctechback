@@ -93,4 +93,127 @@ class ContractController extends Controller
             return $this->error($exception);
         }
     }
+
+    /**
+     * @OA\Post(
+     *  path="/api/contracts/complete/{id}",
+     *  tags={"Contracts"},
+     *  summary="Complete Contract",
+     *  security={{ "apiAuth": {} }},
+     *  @OA\Parameter(
+     *        name="id",
+     *        in="path",
+     *        description="id",
+     *        example="",
+     *        required=true,
+     *    ),
+     *  @OA\Response(
+     *       response="200",
+     *       description="success",
+     *       @OA\JsonContent()
+     *   ),
+     *   @OA\Response(
+     *       response="400",
+     *       description="bad request",
+     *       @OA\JsonContent()
+     *   ),
+     * )
+     *
+     * Complete Contract
+     *
+     * @param int $id
+     * @param ContractService $contractService
+     * @return ContractResource|JsonResponse
+     */
+    public function complete(int $id, ContractService $contractService): ContractResource|JsonResponse
+    {
+        try {
+            $contractService->complete($id);
+            return $this->success('Contract Was Completed');
+        } catch (Exception $exception) {
+            return $this->error($exception);
+        }
+    }
+
+    /**
+     * @OA\Post(
+     *  path="/api/contracts/dispute/{id}",
+     *  tags={"Contracts"},
+     *  summary="Dispute Contract",
+     *  security={{ "apiAuth": {} }},
+     *  @OA\Parameter(
+     *        name="id",
+     *        in="path",
+     *        description="id",
+     *        example="",
+     *        required=true,
+     *    ),
+     *  @OA\Response(
+     *       response="200",
+     *       description="success",
+     *       @OA\JsonContent()
+     *   ),
+     *   @OA\Response(
+     *       response="400",
+     *       description="bad request",
+     *       @OA\JsonContent()
+     *   ),
+     * )
+     *
+     * Dispute Contract
+     *
+     * @param int $id
+     * @param ContractService $contractService
+     * @return ContractResource|JsonResponse
+     */
+    public function dispute(int $id, ContractService $contractService): ContractResource|JsonResponse
+    {
+        try {
+            $contractService->dispute($id);
+            return $this->success('Contract Was Disputed');
+        } catch (Exception $exception) {
+            return $this->error($exception);
+        }
+    }
+
+    /**
+     * @OA\Delete(
+     *  path="/api/contracts/delete/{id}",
+     *  tags={"Contracts"},
+     *  summary="Complete Contract",
+     *  security={{ "apiAuth": {} }},
+     *  @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="id",
+     *         example="",
+     *         required=true,
+     *     ),
+     *  @OA\Response(
+     *       response="200",
+     *       description="success",
+     *       @OA\JsonContent()
+     *   ),
+     *   @OA\Response(
+     *       response="400",
+     *       description="bad request",
+     *       @OA\JsonContent()
+     *   ),
+     * )
+     *
+     * Delete Contract
+     *
+     * @param int $id
+     * @param ContractService $contractService
+     * @return ContractResource|JsonResponse
+     */
+    public function destroy(int $id, ContractService $contractService): ContractResource|JsonResponse
+    {
+        try {
+            $contractService->destroy($id);
+            return $this->success('Contract Was Deleted');
+        } catch (Exception $exception) {
+            return $this->error($exception);
+        }
+    }
 }
