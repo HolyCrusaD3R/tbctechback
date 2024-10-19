@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ContractController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
@@ -14,14 +15,26 @@ Route::prefix('auth')->group(function () {
     });
 });
 
+Route::prefix('products')->group(function () {
+    Route::controller(ProductController::class)->group(function () {
+        Route::get(uri: '/', action: 'index');
+        Route::get(uri: '/{id}', action: 'show');
+    });
+});
+
 Route::middleware('auth:api')->group(function () {
     Route::prefix('products')->group(function () {
         Route::controller(ProductController::class)->group(function () {
-            Route::get(uri: '/', action: 'index');
-            Route::get(uri: '/{id}', action: 'show');
             Route::post(uri: '/create', action: 'create');
             Route::patch(uri: '/update/{id}', action: 'update');
             Route::delete(uri: '/delete/{id}', action: 'destroy');
+        });
+    });
+
+    Route::prefix('contracts')->group(function () {
+        Route::controller(ContractController::class)->group(function () {
+            Route::get(uri: '/{id}', action: 'show');
+            Route::post(uri: '/create', action: 'create');
         });
     });
 

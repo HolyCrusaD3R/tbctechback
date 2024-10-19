@@ -6,6 +6,114 @@
         "version": "1.0.0"
     },
     "paths": {
+        "/api/contracts/{id}": {
+            "get": {
+                "tags": [
+                    "Contracts"
+                ],
+                "summary": "Get Contracts List",
+                "operationId": "0551b349162da83031f7c5f1eac63c41",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id",
+                        "required": true,
+                        "example": ""
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "bad request",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/contracts/create": {
+            "post": {
+                "tags": [
+                    "Contracts"
+                ],
+                "summary": "Create a new product",
+                "operationId": "92a9a71387a87827e8ed936608dd0431",
+                "requestBody": {
+                    "description": "Create Product object",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "title": {
+                                        "type": "string",
+                                        "format": "text",
+                                        "example": "Product"
+                                    },
+                                    "conditions": {
+                                        "type": "string",
+                                        "format": "text",
+                                        "example": "Conditions"
+                                    },
+                                    "amount": {
+                                        "type": "integer",
+                                        "example": 5000
+                                    },
+                                    "product_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "buyer_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "bad request",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            }
+        },
         "/api/auth/login": {
             "post": {
                 "tags": [
@@ -120,12 +228,7 @@
                             }
                         }
                     }
-                },
-                "security": [
-                    {
-                        "apiAuth": []
-                    }
-                ]
+                }
             }
         },
         "/api/products/{id}": {
@@ -161,12 +264,7 @@
                             }
                         }
                     }
-                },
-                "security": [
-                    {
-                        "apiAuth": []
-                    }
-                ]
+                }
             }
         },
         "/api/products/create": {
@@ -439,6 +537,10 @@
         }
     },
     "tags": [
+        {
+            "name": "Contracts",
+            "description": "Contracts"
+        },
         {
             "name": "Authentification",
             "description": "Authentification"

@@ -20,7 +20,6 @@ class ProductController extends Controller
      *  path="/api/products",
      *  tags={"Products"},
      *  summary="Get Products List",
-     *  security={{ "apiAuth": {} }},
      *  @OA\Response(
      *       response="200",
      *       description="success",
@@ -53,7 +52,6 @@ class ProductController extends Controller
      *  path="/api/products/{id}",
      *  tags={"Products"},
      *  summary="Get Products List",
-     *  security={{ "apiAuth": {} }},
      *  @OA\Parameter(
      *       name="id",
      *       in="path",

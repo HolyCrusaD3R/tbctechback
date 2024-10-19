@@ -7,14 +7,14 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Contract extends Model
 {
-    public $fillable = ['title', 'product_id', 'receiver_id', 'sender_id'];
+    public $fillable = ['title', 'conditions', 'amount',  'product_id', 'buyer_id'];
 
     /**
      * @return BelongsTo
      */
     public function product(): BelongsTo
     {
-        return $this->belongsTo(Product::class, 'seller_id', 'id');
+        return $this->belongsTo(Product::class, 'product_id', 'id');
     }
 
     /**
