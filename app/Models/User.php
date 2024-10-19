@@ -46,6 +46,20 @@ class User extends Authenticatable implements JWTSubject
     }
 
     /**
+     * @return HasMany
+     */
+    public function issued_contracts(): HasMany
+    {
+        return $this->hasMany(Contract::class, 'buyer_id', 'id');
+    }
+
+    public function getReceivedContractsAttribute()
+    {
+        return Contract::query()->withWhereHas('product', function ($query) {
+            $query->where('user_id', $this->id);
+        })->get();
+    }
+    /**
      * Get the attributes that should be cast.
      *
      * @return array<string, string>

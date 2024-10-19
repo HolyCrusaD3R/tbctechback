@@ -15,7 +15,8 @@ class UserResource extends JsonResource
             'name' => $this->name,
             'email' => $this->email,
             'balance' => $this->balance,
-            'products' => !empty($this->products) ? ProductOptionsCollection::collection($this->products) : null,
+            'received_contracts' => !empty($this->received_contracts) ? ContractOptionsCollection::collection($this->received_contracts) : null,
+            'issued_contracts' => !empty($this->issued_contracts) ? ContractOptionsCollection::collection($this->issued_contracts) : null,
         ];
     }
 }
