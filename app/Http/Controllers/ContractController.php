@@ -96,6 +96,88 @@ class ContractController extends Controller
 
     /**
      * @OA\Post(
+     *  path="/api/contracts/accept/{id}",
+     *  tags={"Contracts"},
+     *  summary="Accept Contract",
+     *  security={{ "apiAuth": {} }},
+     *  @OA\Parameter(
+     *        name="id",
+     *        in="path",
+     *        description="id",
+     *        example="",
+     *        required=true,
+     *    ),
+     *  @OA\Response(
+     *       response="200",
+     *       description="success",
+     *       @OA\JsonContent()
+     *   ),
+     *   @OA\Response(
+     *       response="400",
+     *       description="bad request",
+     *       @OA\JsonContent()
+     *   ),
+     * )
+     *
+     * Accept Contract
+     *
+     * @param int $id
+     * @param ContractService $contractService
+     * @return ContractResource|JsonResponse
+     */
+    public function accept(int $id, ContractService $contractService): ContractResource|JsonResponse
+    {
+        try {
+            $contractService->accept($id);
+            return $this->success('Contract Was Accepted');
+        } catch (Exception $exception) {
+            return $this->error($exception);
+        }
+    }
+
+    /**
+     * @OA\Post(
+     *  path="/api/contracts/reject/{id}",
+     *  tags={"Contracts"},
+     *  summary="Reject Contract",
+     *  security={{ "apiAuth": {} }},
+     *  @OA\Parameter(
+     *        name="id",
+     *        in="path",
+     *        description="id",
+     *        example="",
+     *        required=true,
+     *    ),
+     *  @OA\Response(
+     *       response="200",
+     *       description="success",
+     *       @OA\JsonContent()
+     *   ),
+     *   @OA\Response(
+     *       response="400",
+     *       description="bad request",
+     *       @OA\JsonContent()
+     *   ),
+     * )
+     *
+     * Reject Contract
+     *
+     * @param int $id
+     * @param ContractService $contractService
+     * @return ContractResource|JsonResponse
+     */
+    public function reject(int $id, ContractService $contractService): ContractResource|JsonResponse
+    {
+        try {
+            $contractService->reject($id);
+            return $this->success('Contract Was Rejected');
+        } catch (Exception $exception) {
+            return $this->error($exception);
+        }
+    }
+
+    /**
+     * @OA\Post(
      *  path="/api/contracts/complete/{id}",
      *  tags={"Contracts"},
      *  summary="Complete Contract",

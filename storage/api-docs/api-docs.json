@@ -105,6 +105,88 @@
                 ]
             }
         },
+        "/api/contracts/accept/{id}": {
+            "post": {
+                "tags": [
+                    "Contracts"
+                ],
+                "summary": "Accept Contract",
+                "operationId": "7d4217d54ed98ced2a95a21ee09ad23a",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id",
+                        "required": true,
+                        "example": ""
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "bad request",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/contracts/reject/{id}": {
+            "post": {
+                "tags": [
+                    "Contracts"
+                ],
+                "summary": "Reject Contract",
+                "operationId": "a6f7ca3a769b4bc0521ed70320e3898b",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id",
+                        "required": true,
+                        "example": ""
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "bad request",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            }
+        },
         "/api/contracts/complete/{id}": {
             "post": {
                 "tags": [

@@ -103,6 +103,50 @@ class ContractService
      * @throws NotFoundException
      * @throws UnAuthorizedException
      */
+    public function accept(int $id): int
+    {
+        $userId = Auth::id();
+        $contract = $this->contractQuery->getById($id);
+        if (empty($contract)) {
+            throw new NotFoundException('Contract Was Not Found');
+        }
+        if ($contract->product->user_id != $userId) {
+            throw new UnAuthorizedException('Not Allowed');
+        }
+        $data = [
+            'status' => ContractStatusEnum::Successful
+        ];
+        return $this->contractQuery->update(id: $id, data: $data);
+    }
+
+    /**
+     * @param int $id
+     * @return int
+     * @throws NotFoundException
+     * @throws UnAuthorizedException
+     */
+    public function reject(int $id): int
+    {
+        $userId = Auth::id();
+        $contract = $this->contractQuery->getById($id);
+        if (empty($contract)) {
+            throw new NotFoundException('Contract Was Not Found');
+        }
+        if ($contract->product->user_id != $userId) {
+            throw new UnAuthorizedException('Not Allowed');
+        }
+        $data = [
+            'status' => ContractStatusEnum::Successful
+        ];
+        return $this->contractQuery->update(id: $id, data: $data);
+    }
+
+    /**
+     * @param int $id
+     * @return int
+     * @throws NotFoundException
+     * @throws UnAuthorizedException
+     */
     public function dispute(int $id): int
     {
         $userId = Auth::id();
