@@ -39,7 +39,7 @@ Route::middleware('auth:api')->group(function () {
             Route::post(uri: '/accept/{id}', action: 'accept');
             Route::post(uri: '/reject/{id}', action: 'reject');
             Route::post(uri: '/dispute/{id}', action: 'dispute');
-            Route::post(uri: '/delete/{id}', action: 'destroy');
+            Route::delete(uri: '/delete/{id}', action: 'destroy');
         });
     });
 

@@ -9,22 +9,27 @@ use App\Exceptions\ValidationException;
 use App\Models\Contract;
 use App\Queries\ContractQuery;
 use App\Queries\ProductQuery;
+use App\Queries\UserQuery;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ContractService
 {
     private ContractQuery $contractQuery;
     private ProductQuery $productQuery;
+    private UserQuery $userQuery;
 
     /**
      * @param ProductQuery $productQuery
      * @param ContractQuery $contractQuery
+     * @param UserQuery $userQuery
      */
-    public function __construct(ProductQuery $productQuery, ContractQuery $contractQuery)
+    public function __construct(ProductQuery $productQuery, ContractQuery $contractQuery, UserQuery $userQuery)
     {
         $this->productQuery = $productQuery;
         $this->contractQuery = $contractQuery;
+        $this->userQuery = $userQuery;
     }
 
     /**
@@ -50,14 +55,6 @@ class ContractService
         return $this->contractQuery->getById(id: $id);
     }
 
-    /**
-     * @param int $id
-     * @return mixed
-     */
-    public function destroy(int $id): mixed
-    {
-        return $this->contractQuery->destroy($id);
-    }
 
     /**
      * @param array $data
@@ -68,11 +65,19 @@ class ContractService
     {
         $product = $this->productQuery->getById($data['product_id']);
         $data['buyer_id'] = Auth::id();
+        $data['amount'] = $product->price;
+        $user = $this->userQuery->getUserById(id: $data['buyer_id']);
         if ($product['user_id'] === Auth::id()) {
             throw new ValidationException('You Cannot Form A Contract With Yourself');
         }
-        $data['status'] = ContractStatusEnum::Sent;
-        return $this->contractQuery->create(data: $data);
+        if ($user->balance < $product['price']) {
+            throw new ValidationException('Insufficient Balance');
+        }
+        return DB::transaction(function () use ($product, $data, $user) {
+            $data['status'] = ContractStatusEnum::Sent;
+            $this->userQuery->updateBalanceById(id: $user->id, balance: $user->balance - $product->price);
+            return $this->contractQuery->create(data: $data);
+        });
     }
 
     /**
@@ -91,10 +96,17 @@ class ContractService
         if ($contract->buyer->id != $userId) {
             throw new UnAuthorizedException('Not Allowed');
         }
-        $data = [
-            'status' => ContractStatusEnum::Successful
-        ];
-        return $this->contractQuery->update(id: $id, data: $data);
+
+        $seller = $this->userQuery->getUserById($contract->product->user_id);
+        return DB::transaction(function () use ($id, $userId, $contract, $seller) {
+            $data = [
+                'status' => ContractStatusEnum::Successful
+            ];
+            if ($contract->status != ContractStatusEnum::Successful->value){
+                $this->userQuery->updateBalanceById(id: $seller->id, balance: $seller->balance + $contract->product->price);
+            }
+            return $this->contractQuery->update(id: $id, data: $data);
+        });
     }
 
     /**
@@ -135,10 +147,11 @@ class ContractService
         if ($contract->product->user_id != $userId) {
             throw new UnAuthorizedException('Not Allowed');
         }
-        $data = [
-            'status' => ContractStatusEnum::Successful
-        ];
-        return $this->contractQuery->update(id: $id, data: $data);
+        $buyer = $this->userQuery->getUserById($contract->buyer_id);
+        return DB::transaction(function () use ($id, $userId, $contract, $buyer) {
+            $this->userQuery->updateBalanceById(id: $buyer->id, balance: $buyer->balance + $contract->product->price);
+            return $this->contractQuery->destroy(id: $id);
+        });
     }
 
     /**
@@ -176,12 +189,13 @@ class ContractService
         if (empty($contract)) {
             throw new NotFoundException('Contract Was Not Found');
         }
-        if ($contract->buyer->id != $userId) {
+        if ($contract->buyer_id != $userId) {
             throw new UnAuthorizedException('Not Allowed');
         }
-        $data = [
-            'status' => ContractStatusEnum::Deleted
-        ];
-        return $this->contractQuery->update(id: $id, data: $data);
+        $buyer = $this->userQuery->getUserById($contract->buyer_id);
+        return DB::transaction(function () use ($id, $userId, $contract, $buyer) {
+            $this->userQuery->updateBalanceById(id: $buyer->id, balance: $buyer->balance + $contract->product->price);
+            return $this->contractQuery->destroy(id: $id);
+        });
     }
 }

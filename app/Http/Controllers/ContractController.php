@@ -62,7 +62,6 @@ class ContractController extends Controller
      *      required=true,
      *      @OA\JsonContent(
      *      @OA\Property(property="conditions", type="string", format="text", example="Conditions"),
-     *      @OA\Property(property="amount", type="integer", example=5000),
      *      @OA\Property(property="product_id", type="integer", example=1),
      *   ),
      *  ),
@@ -292,7 +291,7 @@ class ContractController extends Controller
     public function destroy(int $id, ContractService $contractService): ContractResource|JsonResponse
     {
         try {
-            $contractService->destroy($id);
+            $contractService->delete($id);
             return $this->success('Contract Was Deleted');
         } catch (Exception $exception) {
             return $this->error($exception);

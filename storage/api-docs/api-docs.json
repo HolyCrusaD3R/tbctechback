@@ -66,10 +66,6 @@
                                         "format": "text",
                                         "example": "Conditions"
                                     },
-                                    "amount": {
-                                        "type": "integer",
-                                        "example": 5000
-                                    },
                                     "product_id": {
                                         "type": "integer",
                                         "example": 1

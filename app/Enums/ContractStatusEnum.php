@@ -6,8 +6,6 @@ enum ContractStatusEnum: int
 {
     case Sent = 0;
     case InProgress = 1;
-    case Rejected = 2;
-    case Successful = 3;
-    case Disputed = 4;
-    case Deleted = 5;
+    case Successful = 2;
+    case Disputed = 3;
 }

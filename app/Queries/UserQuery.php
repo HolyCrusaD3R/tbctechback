@@ -9,14 +9,17 @@ class UserQuery
 {
 
     /**
-     * @param $email
+     * @param int $id
+     * @param int $balance
      * @return mixed
      */
-    public function getUserByEmail($email): mixed
+    public function updateBalanceById(int $id, int $balance): mixed
     {
         return User::query()
-            ->where('email', $email)
-            ->first();
+            ->where('id', $id)
+            ->update([
+                'balance' => $balance
+            ]);
     }
 
     /**

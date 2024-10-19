@@ -25,7 +25,6 @@ class CreateContractRequest extends FormRequest
     {
         return [
             'conditions' => ['required', 'string'],
-            'amount' => ['required', 'numeric'],
             'product_id' => ['required', 'integer', Rule::exists('products', 'id')],
         ];
     }
