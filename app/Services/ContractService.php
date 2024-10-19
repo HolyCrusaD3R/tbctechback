@@ -44,7 +44,7 @@ class ContractService
     {
         $userId = Auth::id();
         $contract = $this->contractQuery->getById(id: $id);
-        if ($contract->product->id != $userId && $contract->buyer->id != $userId) {
+        if ($contract->product->user_id != $userId && $contract->buyer->id != $userId) {
             throw new UnAuthorizedException();
         }
         return $this->contractQuery->getById(id: $id);
