@@ -4,6 +4,7 @@ namespace App\Queries;
 
 
 use App\Models\Product;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 class ProductQuery
@@ -26,6 +27,27 @@ class ProductQuery
         return Product::query()
             ->where('id', $id)
             ->first();
+    }
+
+    /**
+     * @param int $id
+     * @return mixed
+     */
+    public function destroy(int $id): mixed
+    {
+        return Product::query()
+            ->where('id', $id)
+            ->delete();
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getAll(): Collection
+    {
+        return Product::query()
+            ->orderBy('created_at', 'desc')
+            ->get();
     }
 
     /**

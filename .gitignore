@@ -6,6 +6,7 @@
 /storage/app/secrets
 /storage/*.key
 /vendor
+/docker/data/*
 .env
 .env.backup
 .env.production

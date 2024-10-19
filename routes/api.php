@@ -16,8 +16,11 @@ Route::prefix('auth')->group(function () {
 Route::middleware('auth:api')->group(function () {
     Route::prefix('products')->group(function () {
         Route::controller(ProductController::class)->group(function () {
+            Route::get(uri: '/', action: 'index');
+            Route::get(uri: '/{id}', action: 'show');
             Route::post(uri: '/create', action: 'create');
             Route::patch(uri: '/update/{id}', action: 'update');
+            Route::delete(uri: '/delete/{id}', action: 'destroy');
         });
     });
 });

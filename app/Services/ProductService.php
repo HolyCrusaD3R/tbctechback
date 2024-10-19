@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Exceptions\NotFoundException;
 use App\Models\Product;
 use App\Queries\ProductQuery;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
 use Spatie\MediaLibrary\MediaCollections\Exceptions\FileCannotBeAdded;
 use Spatie\MediaLibrary\MediaCollections\Exceptions\FileDoesNotExist;
@@ -20,6 +21,32 @@ class ProductService
     public function __construct(ProductQuery $productQuery)
     {
         $this->productQuery = $productQuery;
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getAll(): Collection
+    {
+        return $this->productQuery->getAll();
+    }
+
+    /**
+     * @param int $id
+     * @return Product
+     */
+    public function getById(int $id): Product
+    {
+        return $this->productQuery->getById($id);
+    }
+
+    /**
+     * @param int $id
+     * @return mixed
+     */
+    public function destroy(int $id): mixed
+    {
+        return $this->productQuery->destroy($id);
     }
 
     /**
