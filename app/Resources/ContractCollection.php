@@ -21,6 +21,7 @@ class ContractCollection extends JsonResource
             'product' => [
                 'id' => $this->product->id,
                 'title' => $this->product->title,
+                'price' => $this->product->price,
                 'images' => $this->product->all_media,
                 'user' => [
                     'id' => $this->product->user->id,
