@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -21,6 +22,13 @@ Route::middleware('auth:api')->group(function () {
             Route::post(uri: '/create', action: 'create');
             Route::patch(uri: '/update/{id}', action: 'update');
             Route::delete(uri: '/delete/{id}', action: 'destroy');
+        });
+    });
+
+    Route::prefix('users')->group(function () {
+        Route::controller(UserController::class)->group(function () {
+            Route::get(uri: '/whoami', action: 'whoami');
+            Route::get(uri: '/dashboard', action: 'dashboard');
         });
     });
 });

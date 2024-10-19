@@ -360,6 +360,70 @@
                     }
                 ]
             }
+        },
+        "/api/users/whoami": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Get user info",
+                "operationId": "9aba5a50e787af689293070eda30c144",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/users/dashboard": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Get user info",
+                "operationId": "c872406e06f1e8a181aaa6ef7cf774d6",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            }
         }
     },
     "components": {
@@ -382,6 +446,10 @@
         {
             "name": "Products",
             "description": "Products"
+        },
+        {
+            "name": "User",
+            "description": "User"
         }
     ]
 }

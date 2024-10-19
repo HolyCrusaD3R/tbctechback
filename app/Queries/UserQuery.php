@@ -19,4 +19,15 @@ class UserQuery
             ->first();
     }
 
+    /**
+     * @param int $id
+     * @return User|null
+     */
+    public function getUserById(int $id): ?User
+    {
+        return User::query()
+            ->where('id', $id)
+            ->first();
+    }
+
 }
