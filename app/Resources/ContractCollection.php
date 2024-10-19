@@ -32,6 +32,7 @@ class ContractCollection extends JsonResource
                 'id' => $this->buyer->id,
                 'name' => $this->buyer->name
             ],
+            'created_at' => $this->created_at
         ];
     }
 }
