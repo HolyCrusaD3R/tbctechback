@@ -3,21 +3,9 @@
 namespace App\Services;
 
 use App\Exceptions\ValidationException;
-use App\Queries\UserQuery;
 
 class LoginService
 {
-
-    private UserQuery $userQuery;
-
-    /**
-     * @param UserQuery $userQuery
-     */
-    public function __construct(UserQuery $userQuery)
-    {
-        $this->userQuery = $userQuery;
-    }
-
     /**
      * @param string $email
      * @param string $password

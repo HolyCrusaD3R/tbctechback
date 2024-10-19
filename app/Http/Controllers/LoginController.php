@@ -15,7 +15,7 @@ class LoginController extends Controller
 
     /**
      * @OA\Post(
-     *  path="/api/v1/auth/login",
+     *  path="/api/auth/login",
      *  tags={"Authentification"},
      *  summary="Get a JWT access token via given credentials.",
      *  @OA\RequestBody(
@@ -66,7 +66,7 @@ class LoginController extends Controller
 
     /**
      * @OA\Post(
-     *  path="/api/v1/auth/refresh-token",
+     *  path="/api/auth/refresh-token",
      *  tags={"Authentification"},
      *  summary="Get new JWT access token",
      *  security={{ "apiAuth": {} }},
@@ -92,37 +92,6 @@ class LoginController extends Controller
         try {
             $token = $loginService->refreshToken();
             return new LoginResource($token);
-        } catch (Exception $exception) {
-            return $this->error($exception);
-        }
-    }
-
-    /**
-     * @OA\Post(
-     *  path="/api/v1/auth/test",
-     *  tags={"Authentification"},
-     *  summary="Get new JWT access token",
-     *  security={{ "apiAuth": {} }},
-     *  @OA\Response(
-     *      response="200",
-     *      description="success",
-     *      @OA\JsonContent()
-     *  ),
-     *  @OA\Response(
-     *      response="400",
-     *      description="bad request",
-     *      @OA\JsonContent()
-     *  ),
-     * )
-     *
-     * Get new JWT access token
-     *
-     * @return LoginResource|JsonResponse
-     */
-    public function test(): LoginResource|JsonResponse
-    {
-        try {
-            return $this->success('true');
         } catch (Exception $exception) {
             return $this->error($exception);
         }

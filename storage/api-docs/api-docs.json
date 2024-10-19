@@ -6,13 +6,13 @@
         "version": "1.0.0"
     },
     "paths": {
-        "/api/v1/auth/login": {
+        "/api/auth/login": {
             "post": {
                 "tags": [
                     "Authentification"
                 ],
                 "summary": "Get a JWT access token via given credentials.",
-                "operationId": "7555efe37a56d0d245f64a4eed716774",
+                "operationId": "929538638b39fce3e5d2c142898267b5",
                 "requestBody": {
                     "description": "Create user object",
                     "required": true,
@@ -64,13 +64,13 @@
                 }
             }
         },
-        "/api/v1/auth/refresh-token": {
+        "/api/auth/refresh-token": {
             "post": {
                 "tags": [
                     "Authentification"
                 ],
                 "summary": "Get new JWT access token",
-                "operationId": "0f52428ba775ea43b5f6b9d125e04d7d",
+                "operationId": "0daaf97bfcf22082ddc38b9529ed075c",
                 "responses": {
                     "200": {
                         "description": "success",
@@ -96,13 +96,132 @@
                 ]
             }
         },
-        "/api/v1/auth/test": {
+        "/api/products/create": {
             "post": {
                 "tags": [
-                    "Authentification"
+                    "Products"
                 ],
-                "summary": "Get new JWT access token",
-                "operationId": "3da1091964a86b9bec63821690321edb",
+                "summary": "Create a new product",
+                "operationId": "2cc8e547cc073564dc0c1143e6730b55",
+                "requestBody": {
+                    "description": "Create Product object",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "title": {
+                                        "type": "string",
+                                        "format": "text",
+                                        "example": "Product"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "format": "text",
+                                        "example": "Description"
+                                    },
+                                    "price": {
+                                        "type": "integer",
+                                        "example": 5000
+                                    },
+                                    "user_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "images": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        },
+                                        "example": [
+                                            "https://i.imgur.com/onqNaQp.jpeg",
+                                            "https://i.imgur.com/9Y66oxi.jpeg"
+                                        ]
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "bad request",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/products/update/{id}": {
+            "patch": {
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Create a new product",
+                "operationId": "f7fca403cc7bcab1968c88b055864549",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id",
+                        "required": true,
+                        "example": ""
+                    }
+                ],
+                "requestBody": {
+                    "description": "Create Product object",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "title": {
+                                        "type": "string",
+                                        "format": "text",
+                                        "example": "Product"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "format": "text",
+                                        "example": "Description"
+                                    },
+                                    "price": {
+                                        "type": "integer",
+                                        "example": 5000
+                                    },
+                                    "images": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        },
+                                        "example": [
+                                            "https://i.imgur.com/onqNaQp.jpeg",
+                                            "https://i.imgur.com/9Y66oxi.jpeg"
+                                        ]
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "200": {
                         "description": "success",
@@ -145,6 +264,10 @@
         {
             "name": "Authentification",
             "description": "Authentification"
+        },
+        {
+            "name": "Products",
+            "description": "Products"
         }
     ]
 }
