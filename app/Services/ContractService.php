@@ -4,24 +4,25 @@ namespace App\Services;
 
 use App\Enums\ContractStatusEnum;
 use App\Exceptions\NotFoundException;
+use App\Exceptions\ValidationException;
 use App\Models\Contract;
 use App\Queries\ContractQuery;
+use App\Queries\ProductQuery;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use Spatie\MediaLibrary\MediaCollections\Exceptions\FileCannotBeAdded;
-use Spatie\MediaLibrary\MediaCollections\Exceptions\FileDoesNotExist;
-use Spatie\MediaLibrary\MediaCollections\Exceptions\FileIsTooBig;
 
 class ContractService
 {
     private ContractQuery $contractQuery;
+    private ProductQuery $productQuery;
 
     /**
+     * @param ProductQuery $productQuery
      * @param ContractQuery $contractQuery
      */
-    public function __construct(ContractQuery $contractQuery)
+    public function __construct(ProductQuery $productQuery, ContractQuery $contractQuery)
     {
+        $this->productQuery = $productQuery;
         $this->contractQuery = $contractQuery;
     }
 
@@ -56,9 +57,15 @@ class ContractService
     /**
      * @param array $data
      * @return mixed
+     * @throws ValidationException
      */
     public function create(array $data): mixed
     {
+        $product = $this->productQuery->getById($data['product_id']);
+        $data['buyer_id'] = Auth::id();
+        if ($product['user_id'] === Auth::id()) {
+            throw new ValidationException('You Cannot Form A Contract On Yourself');
+        }
         $data['status'] = ContractStatusEnum::Sent;
         return $this->contractQuery->create(data: $data);
     }

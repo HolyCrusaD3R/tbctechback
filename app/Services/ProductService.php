@@ -6,6 +6,7 @@ use App\Exceptions\NotFoundException;
 use App\Models\Product;
 use App\Queries\ProductQuery;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Spatie\MediaLibrary\MediaCollections\Exceptions\FileCannotBeAdded;
 use Spatie\MediaLibrary\MediaCollections\Exceptions\FileDoesNotExist;
@@ -59,6 +60,7 @@ class ProductService
     public function create(array $data): mixed
     {
         $product = DB::transaction(function () use ($data) {
+            $data['user_id'] = Auth::id();
             $product = $this->productQuery->create(data: $data);
             $this->removeOldImages(product: $product);
             $this->addImages(product: $product, images: $data['images'] ?? []);

@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Requests\CreateContractRequest;
 use App\Resources\ContractResource;
-use App\Resources\ProductResource;
 use App\Services\ContractService;
 use Exception;
 use Illuminate\Http\JsonResponse;
@@ -62,11 +61,9 @@ class ContractController extends Controller
      *      description="Create Product object",
      *      required=true,
      *      @OA\JsonContent(
-     *      @OA\Property(property="title", type="string", format="text", example="Product"),
      *      @OA\Property(property="conditions", type="string", format="text", example="Conditions"),
      *      @OA\Property(property="amount", type="integer", example=5000),
      *      @OA\Property(property="product_id", type="integer", example=1),
-     *      @OA\Property(property="buyer_id", type="integer", example=1),
      *   ),
      *  ),
      *  @OA\Response(

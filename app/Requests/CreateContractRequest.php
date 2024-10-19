@@ -24,11 +24,9 @@ class CreateContractRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => ['required', 'string', 'max:255'],
             'conditions' => ['required', 'string'],
             'amount' => ['required', 'numeric'],
             'product_id' => ['required', 'integer', Rule::exists('products', 'id')],
-            'buyer_id' => ['required', 'integer', Rule::exists('users', 'id')],
         ];
     }
 }

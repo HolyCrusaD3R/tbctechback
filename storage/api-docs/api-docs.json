@@ -61,11 +61,6 @@
                         "application/json": {
                             "schema": {
                                 "properties": {
-                                    "title": {
-                                        "type": "string",
-                                        "format": "text",
-                                        "example": "Product"
-                                    },
                                     "conditions": {
                                         "type": "string",
                                         "format": "text",
@@ -76,10 +71,6 @@
                                         "example": 5000
                                     },
                                     "product_id": {
-                                        "type": "integer",
-                                        "example": 1
-                                    },
-                                    "buyer_id": {
                                         "type": "integer",
                                         "example": 1
                                     }
@@ -294,10 +285,6 @@
                                     "price": {
                                         "type": "integer",
                                         "example": 5000
-                                    },
-                                    "user_id": {
-                                        "type": "integer",
-                                        "example": 1
                                     },
                                     "images": {
                                         "type": "array",

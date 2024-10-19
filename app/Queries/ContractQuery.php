@@ -25,9 +25,10 @@ class ContractQuery
     public function getByIdAndUserId(int $id, int $userId): ?Contract
     {
         return Contract::query()
-            ->withWhereHas('product', function ($query) use ($userId) {
+            ->whereHas('product', function ($query) use ($userId) {
                 $query->where('user_id', $userId);
             })
+            ->orWhere('buyer_id', $userId)
             ->where('id', $id)
             ->first();
     }

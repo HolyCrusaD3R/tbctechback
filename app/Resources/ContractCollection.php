@@ -5,7 +5,7 @@ namespace App\Resources;
 use App\Enums\ContractStatusEnum;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ContractOptionsCollection extends JsonResource
+class ContractCollection extends JsonResource
 {
     /**
      * @param $request

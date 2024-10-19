@@ -100,7 +100,6 @@ class ProductController extends Controller
      *      @OA\Property(property="title", type="string", format="text", example="Product"),
      *      @OA\Property(property="description", type="string", format="text", example="Description"),
      *      @OA\Property(property="price", type="integer", example=5000),
-     *      @OA\Property(property="user_id", type="integer", example=1),
      *      @OA\Property(
      *          property="images",
      *          type="array",

@@ -27,7 +27,6 @@ class CreateProductRequest extends FormRequest
             'title' => ['required', 'string', 'max:255'],
             'description' => ['required', 'string'],
             'price' => ['required', 'numeric'],
-            'user_id' => ['required', 'integer', Rule::exists('users', 'id')],
             'images' => ['nullable', 'array'],
             'images.*' => ['string', 'url'],
         ];

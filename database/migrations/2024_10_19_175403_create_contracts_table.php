@@ -13,11 +13,9 @@ return new class extends Migration
     {
         Schema::create('contracts', function (Blueprint $table) {
             $table->id();
-            $table->string('title')->nullable();
             $table->text('conditions');
             $table->unsignedInteger('amount');
             $table->unsignedTinyInteger('status')->default(0);
-            $table->unsignedTinyInteger('delivery_status')->nullable();
             $table->foreignId('product_id')
                 ->constrained()
                 ->restrictOnDelete()
@@ -26,6 +24,7 @@ return new class extends Migration
                 ->constrained('users')
                 ->restrictOnDelete()
                 ->cascadeOnUpdate();
+            $table->unique('product_id', 'buyer_id');
             $table->timestamps();
         });
     }
