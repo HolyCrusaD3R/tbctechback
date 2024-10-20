@@ -137,6 +137,47 @@ class ProductController extends Controller
     }
 
     /**
+     * @OA\Post(
+     *  path="/api/products/generate-conditions/{id}",
+     *  tags={"Products"},
+     *  summary="Create a new product",
+     *  security={{ "apiAuth": {} }},
+     *  @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="id",
+     *         example="",
+     *         required=true,
+     *     ),
+     *  @OA\Response(
+     *       response="200",
+     *       description="success",
+     *       @OA\JsonContent()
+     *   ),
+     *   @OA\Response(
+     *       response="400",
+     *       description="bad request",
+     *       @OA\JsonContent()
+     *   ),
+     * )
+     *
+     * Generate Conditions
+     *
+     * @param int $id
+     * @param ProductService $productService
+     * @return JsonResponse
+     */
+    public function generateConditions(int $id, ProductService $productService): JsonResponse
+    {
+        try {
+            $conditions = $productService->generateConditions(id: $id);
+            return $this->success($conditions);
+        } catch (Exception $exception) {
+            return $this->error($exception);
+        }
+    }
+
+    /**
      * @OA\Patch(
      *  path="/api/products/update/{id}",
      *  tags={"Products"},

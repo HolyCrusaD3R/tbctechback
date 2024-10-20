@@ -26,6 +26,7 @@ Route::middleware('auth:api')->group(function () {
     Route::prefix('products')->group(function () {
         Route::controller(ProductController::class)->group(function () {
             Route::post(uri: '/create', action: 'create');
+            Route::post(uri: '/generate-conditions/{id}', action: 'generateConditions');
             Route::patch(uri: '/update/{id}', action: 'update');
             Route::delete(uri: '/delete/{id}', action: 'destroy');
         });
@@ -35,7 +36,6 @@ Route::middleware('auth:api')->group(function () {
         Route::controller(ContractController::class)->group(function () {
             Route::get(uri: '/{id}', action: 'show');
             Route::post(uri: '/create', action: 'create');
-            Route::post(uri: '/generate-conditions/{id}', action: 'generateConditions');
             Route::post(uri: '/complete/{id}', action: 'complete');
             Route::post(uri: '/accept/{id}', action: 'accept');
             Route::post(uri: '/reject/{id}', action: 'reject');

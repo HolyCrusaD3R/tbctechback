@@ -8,6 +8,7 @@ use App\Queries\ProductQuery;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use OpenAI;
 use Spatie\MediaLibrary\MediaCollections\Exceptions\FileCannotBeAdded;
 use Spatie\MediaLibrary\MediaCollections\Exceptions\FileDoesNotExist;
 use Spatie\MediaLibrary\MediaCollections\Exceptions\FileIsTooBig;
@@ -67,6 +68,33 @@ class ProductService
             return $product;
         });
         return $product->fresh();
+    }
+
+    /**
+     * @param int $id
+     * @return string|null
+     * @throws NotFoundException
+     */
+    public function generateConditions(int $id): ?string
+    {
+        $product = $this->productQuery->getById($id);
+        if (empty($product)) {
+            throw new NotFoundException('Contract Not Found');
+        }
+        $apiKey = env('OPENAI_API_KEY');
+        $client = OpenAI::client($apiKey);
+
+        $prompt = "დამიგენერირე მოკლე, კონკრეტული smart contract-ის პირობები შემდეგი პროდუქტისთვის: \n\n" .
+            "სათაური: $product->title\n" .
+            "აღწერა: $product->description\n\n" .
+            "smart contract უნდა შეიცავდეს, დაბრუნების პოლიტიკას, ფიზიკურ მდგომარეობას. უბრალოდ დაწერე სუფთა ტექსტი დამატებითი ელემენტების გარეშე, რომ ეს ინფორმაცია დატაბაზაში შევინახო";
+        $result = $client->chat()->create([
+            'model' => 'gpt-4o',
+            'messages' => [
+                ['role' => 'user', 'content' => $prompt],
+            ],
+        ]);
+        return $result->choices[0]->message->content;
     }
 
     /**

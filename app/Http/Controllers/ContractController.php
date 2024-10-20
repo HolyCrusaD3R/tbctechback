@@ -95,47 +95,6 @@ class ContractController extends Controller
 
     /**
      * @OA\Post(
-     *  path="/api/contracts/generate-conditions/{id}",
-     *  tags={"Contracts"},
-     *  summary="Create a new product",
-     *  security={{ "apiAuth": {} }},
-     *  @OA\Parameter(
-     *         name="id",
-     *         in="path",
-     *         description="id",
-     *         example="",
-     *         required=true,
-     *     ),
-     *  @OA\Response(
-     *       response="200",
-     *       description="success",
-     *       @OA\JsonContent()
-     *   ),
-     *   @OA\Response(
-     *       response="400",
-     *       description="bad request",
-     *       @OA\JsonContent()
-     *   ),
-     * )
-     *
-     * Generate Conditions
-     *
-     * @param int $id
-     * @param ContractService $contractService
-     * @return ContractResource|JsonResponse
-     */
-    public function generateConditions(int $id, ContractService $contractService): ContractResource|JsonResponse
-    {
-        try {
-            $conditions = $contractService->generateConditions(id: $id);
-            return $this->success($conditions);
-        } catch (Exception $exception) {
-            return $this->error($exception);
-        }
-    }
-
-    /**
-     * @OA\Post(
      *  path="/api/contracts/accept/{id}",
      *  tags={"Contracts"},
      *  summary="Accept Contract",

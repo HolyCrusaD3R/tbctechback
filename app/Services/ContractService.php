@@ -13,7 +13,6 @@ use App\Queries\UserQuery;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use OpenAI;
 
 class ContractService
 {
@@ -79,36 +78,6 @@ class ContractService
             $this->userQuery->updateBalanceById(id: $user->id, balance: $user->balance - $product->price);
             return $this->contractQuery->create(data: $data);
         });
-    }
-
-    /**
-     * @param int $id
-     * @return mixed
-     * @throws NotFoundException
-     */
-    public function generateConditions(int $id): mixed
-    {
-
-        $contract = $this->contractQuery->getById($id);
-        if (empty($contract)) {
-            throw new NotFoundException('Contract Not Found');
-        }
-        $apiKey = env('OPENAI_API_KEY');
-        $client = OpenAI::client($apiKey);
-
-        $productTitle = $contract->product->title;
-        $productDescription = $contract->product->description;
-        $prompt = "დამიგენერირე მოკლე, კონკრეტული smart contract-ის პირობები შემდეგი პროდუქტისთვის: \n\n" .
-            "სათაური: $productTitle\n" .
-            "აღწერა: $productDescription\n\n" .
-            "smart contract უნდა შეიცავდეს, დაბრუნების პოლიტიკას, ფიზიკურ მდგომარეობას. უბრალოდ დაწერე სუფთა ტექსტი დამატებითი ელემენტების გარეშე, რომ ეს ინფორმაცია დატაბაზაში შევინახო";
-        $result = $client->chat()->create([
-            'model' => 'gpt-4o',
-            'messages' => [
-                ['role' => 'user', 'content' => $prompt],
-            ],
-        ]);
-        return $result->choices[0]->message->content;
     }
 
     /**
