@@ -126,7 +126,7 @@ class ContractService
             throw new UnAuthorizedException('Not Allowed');
         }
         $data = [
-            'status' => ContractStatusEnum::Successful
+            'status' => ContractStatusEnum::InProgress
         ];
         return $this->contractQuery->update(id: $id, data: $data);
     }
